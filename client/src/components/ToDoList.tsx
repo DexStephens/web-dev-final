@@ -1,6 +1,8 @@
 import { useMemo, useState } from "react";
 import { useToDoDataContext } from "../context/ToDoDataContextHook";
-import { ToDo, ToDoListFilter, ToDoListProps } from "../types";
+import { Category, ToDo, ToDoListFilter, ToDoListProps } from "../types";
+import "../styles/ToDoList.css";
+import { ToDoListCard } from "./ToDoListCard";
 
 //CHATGPT USE: Looked up how to implement a multiple select dropdown in React
 
@@ -10,14 +12,17 @@ export function ToDoList({ setSelectedToDo }: ToDoListProps) {
     categories: [],
   });
 
-  const handleCategorySelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOptions = Array.from(e.target.selectedOptions).map(
-      (option) => option.value
-    );
-    const selectedCategories = categories.filter((category) =>
-      selectedOptions.includes(category.name)
-    );
-    setFilter({ ...filter, categories: selectedCategories });
+  const handleCategorySelection = (category: Category) => {
+    if (filter.categories.includes(category)) {
+      setFilter({
+        ...filter,
+        categories: filter.categories.filter(
+          (cat) => cat.name !== category.name
+        ),
+      });
+    } else {
+      setFilter({ ...filter, categories: [...filter.categories, category] });
+    }
   };
 
   const filteredToDos = useMemo(() => {
@@ -31,31 +36,29 @@ export function ToDoList({ setSelectedToDo }: ToDoListProps) {
 
   return (
     <div>
-      <p>Filters</p>
-      <select
-        multiple
-        value={filter.categories.map((cat) => cat.name)}
-        onChange={handleCategorySelection}
-      >
-        {categories.map((category) => (
-          <option key={category.name} value={category.name}>
-            {category.name}
-          </option>
-        ))}
-      </select>
-      <ul>
+      <div className="filter-container">
+        <div className="pill-container">
+          {categories.map((category) => {
+            return (
+              <div
+                className="category"
+                style={{
+                  backgroundColor: filter.categories.includes(category)
+                    ? "#1D8EDD"
+                    : "#51b0f6",
+                }}
+                onClick={() => handleCategorySelection(category)}
+              >
+                {category.name}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <ul className="card-list">
         {filteredToDos.map((toDo: ToDo) => (
-          <li
-            key={toDo.title}
-            onClick={() => setSelectedToDo(toDo)}
-            style={{ border: `1px solid ${toDo.category.color}` }}
-          >
-            <h3>{toDo.title}</h3>
-            <p>{toDo.description}</p>
-            <p>
-              Due Date: {toDo.dueDate ? toDo.dueDate.toString() : "No due date"}
-            </p>
-            <p>Status: {toDo.completed ? "Completed" : "Not Completed"}</p>
+          <li key={toDo.title} onClick={() => setSelectedToDo(toDo)}>
+            <ToDoListCard toDo={toDo} />
           </li>
         ))}
       </ul>

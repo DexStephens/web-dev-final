@@ -4,6 +4,7 @@ import { ToDoList } from "./components/ToDoList";
 import { ToDoModal } from "./components/ToDoModal";
 import { ToDo } from "./types";
 import { CategoryModal } from "./components/CategoryModal";
+import AddIcon from "@mui/icons-material/Add";
 
 function App() {
   const [openToDoModal, setOpenToDoModal] = useState(false);
@@ -23,9 +24,18 @@ function App() {
         <CategoryModal onClose={() => setOpenCategoryModal(false)} />
       )}
       <div>
-        <h1>To-Do App</h1>
-        <button onClick={() => setOpenToDoModal(true)}>Add To-Do</button>
-        <button onClick={() => setOpenCategoryModal(true)}>Add Category</button>
+        {/* Header */}
+        <section className="header">
+          <h1 className="header-title">To-Do App</h1>
+          <div className="toolbar">
+            <button onClick={() => setOpenToDoModal(true)}>
+              <AddIcon /> To-Do
+            </button>
+            <button onClick={() => setOpenCategoryModal(true)}>
+              <AddIcon /> Category
+            </button>
+          </div>
+        </section>
         <ToDoList setSelectedToDo={setSelectedToDo} />
       </div>
     </>
@@ -34,6 +44,5 @@ function App() {
 
 export default App;
 
-//NEXT: Make the app pretty and responsive
 //NEXT: add in notifications, more filter options
 //NEXT: work with local storage

@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useToDoDataContext } from "../context/ToDoDataContextHook";
 import "../styles/Modal.css";
 import { DEFAULT_CATEGORIES } from "../util/constants";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const determineToDo = (toDo: ToDo | null) => {
   if (toDo) {
@@ -64,13 +65,13 @@ export function ToDoModal({ toDo, onClose }: ToDoModalProps) {
   return createPortal(
     <div className="modal-overlay" onClick={() => onClose()}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={() => onClose()}>
+        <div className="modal-close" onClick={() => onClose()}>
           ×
-        </button>
+        </div>
         <h2 className="modal-title">Edit Event</h2>
         <form className="modal-form" onSubmit={handleSubmit}>
           <label>
-            Title
+            <span className="label-text">Title</span>
             <input
               type="text"
               value={currentToDo.title}
@@ -80,7 +81,7 @@ export function ToDoModal({ toDo, onClose }: ToDoModalProps) {
             />
           </label>
           <label>
-            Description
+            <span className="label-text">Description</span>
             <input
               type="text"
               value={currentToDo.description}
@@ -90,17 +91,7 @@ export function ToDoModal({ toDo, onClose }: ToDoModalProps) {
             />
           </label>
           <label>
-            Completed
-            <input
-              type="checkbox"
-              checked={currentToDo.completed}
-              onChange={(e) =>
-                setCurrentToDo({ ...currentToDo, completed: e.target.checked })
-              }
-            />
-          </label>
-          <label>
-            Due Date
+            <span className="label-text">Due Date</span>
             <input
               type="datetime-local"
               value={
@@ -117,7 +108,7 @@ export function ToDoModal({ toDo, onClose }: ToDoModalProps) {
             />
           </label>
           <label>
-            Category
+            <span className="label-text">Category</span>
             <select
               value={currentToDo.category.name}
               onChange={(e) => {
@@ -140,8 +131,14 @@ export function ToDoModal({ toDo, onClose }: ToDoModalProps) {
               ))}
             </select>
           </label>
-          <button onClick={onDelete}>Remove</button>
-          <button type="submit">{toDo === null ? "Create" : "Edit"}</button>
+          <div className="button-container">
+            {toDo !== null && (
+              <button onClick={onDelete}>
+                <DeleteIcon />{" "}
+              </button>
+            )}
+            <button type="submit">{toDo === null ? "Create" : "Update"}</button>
+          </div>
         </form>
       </div>
     </div>,

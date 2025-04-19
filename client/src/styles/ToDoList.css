@@ -1,0 +1,46 @@
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.card {
+  border-radius: 0.75rem;
+  background-color: #b0b0b0;
+  padding: 0.3rem 0.7rem;
+}
+
+.card-title {
+  font-weight: 300;
+  font-size: xx-large;
+  padding: 0;
+  margin: 0;
+}
+
+.card:hover {
+  background-color: #999999;
+  cursor: pointer;
+}
+
+.category {
+  height: 2rem;
+  border-radius: 1rem;
+  width: auto;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.category:hover {
+  cursor: pointer;
+}
+
+.filter-container {
+  display: flex;
+  margin-bottom: 1.5rem;
+}
+
+.pill-container {
+  display: flex;
+  gap: 1rem;
+}

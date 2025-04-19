@@ -37,3 +37,7 @@ export interface ToDoListProps {
 export interface ToDoListFilter {
   categories: Category[];
 }
+
+export interface ToDoListCardProps {
+  toDo: ToDo;
+}

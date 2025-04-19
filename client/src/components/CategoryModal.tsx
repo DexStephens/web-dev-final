@@ -37,13 +37,13 @@ export function CategoryModal({ onClose }: ModalProps) {
   return createPortal(
     <div className="modal-overlay" onClick={() => onClose()}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={() => onClose()}>
+        <div className="modal-close" onClick={() => onClose()}>
           ×
-        </button>
+        </div>
         <h2 className="modal-title">Edit Event</h2>
         <form className="modal-form" onSubmit={handleSubmit}>
           <label>
-            Title
+            <span className="label-text">Title</span>
             <input
               type="text"
               value={newCategory.name}
@@ -53,14 +53,21 @@ export function CategoryModal({ onClose }: ModalProps) {
             />
           </label>
           <label>
-            Color
-            <input
-              type="color"
-              value={newCategory.color}
-              onChange={(e) =>
-                setNewCategory({ ...newCategory, color: e.target.value })
-              }
-            />
+            <span className="label-text">Color</span>
+            <div className="color-wrapper">
+              <div
+                className="color-display"
+                style={{ backgroundColor: newCategory.color }}
+              />
+              <input
+                type="color"
+                className="color-input"
+                value={newCategory.color}
+                onChange={(e) =>
+                  setNewCategory({ ...newCategory, color: e.target.value })
+                }
+              />
+            </div>
           </label>
           <button type="submit">Create</button>
         </form>
