@@ -18,3 +18,7 @@ export interface ToDoModalProps {
   toDo: ToDo | null;
   onClose: () => void;
 }
+
+export interface ToDoListProps {
+  setSelectedToDo: (toDo: ToDo) => void;
+}

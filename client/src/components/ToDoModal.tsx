@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { ToDo, ToDoModalProps } from "../types";
 import { v4 as uuidv4 } from "uuid";
-import { useToDoDataContext } from "./ToDoDataContextHook";
+import { useToDoDataContext } from "../context/ToDoDataContextHook";
+import "../styles/ToDoModal.css";
 
 const determineToDo = (toDo: ToDo | null) => {
   if (toDo) {
@@ -47,6 +48,8 @@ export function ToDoModal({ toDo, onClose }: ToDoModalProps) {
         dueDate: currentToDo.dueDate,
       });
     }
+
+    onClose();
   };
 
   const onDelete = () => {
