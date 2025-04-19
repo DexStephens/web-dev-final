@@ -18,7 +18,7 @@
 body {
   box-sizing: border-box;
   margin: 0;
-  padding: 0;
+  padding: 1rem;
   min-height: 100vh;
 }
 
@@ -57,6 +57,11 @@ input {
   flex: 1;
   color: var(--input);
   padding: 2px;
+}
+
+/* CHATGPT USE: Figure out how to get the calendar icon to show up and not be white (May not work in all broswers, worked in chrome */
+input[type="datetime-local"]::-webkit-calendar-picker-indicator {
+  filter: invert(1);
 }
 
 button {
