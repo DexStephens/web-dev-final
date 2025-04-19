@@ -1,15 +1,11 @@
 import { ReactNode, useState } from "react";
 import { ToDoDataContext } from "./ToDoData";
-import { ToDo } from "../types";
-
-// export interface ToDoDataContextType {
-//   addToDo: (toDo: ToDo) => void;
-//   removeToDo: (id: string) => void;
-//   updateToDo: (id: string, updatedToDo: Partial<ToDo>) => void;
-// }
+import { Category, ToDo } from "../types";
+import { DEFAULT_CATEGORIES } from "../util/constants";
 
 export function ToDoDataProvider({ children }: { children: ReactNode }) {
   const [toDos, setToDos] = useState<ToDo[]>([]);
+  const [categories, setCategories] = useState<Category[]>(DEFAULT_CATEGORIES);
 
   const addToDo = (toDo: ToDo) => {
     setToDos((prevToDos) => [...prevToDos, toDo]);
@@ -27,6 +23,12 @@ export function ToDoDataProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const addCategory = (category: Category) => {
+    if (!categories.some((cat) => cat.name === category.name)) {
+      setCategories((prevCategories) => [...prevCategories, category]);
+    }
+  };
+
   return (
     <ToDoDataContext
       value={{
@@ -35,6 +37,8 @@ export function ToDoDataProvider({ children }: { children: ReactNode }) {
         addToDo,
         removeToDo,
         updateToDo,
+        categories,
+        addCategory,
       }}
     >
       {children}

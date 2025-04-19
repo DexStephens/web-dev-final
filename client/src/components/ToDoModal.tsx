@@ -3,7 +3,8 @@ import { createPortal } from "react-dom";
 import { ToDo, ToDoModalProps } from "../types";
 import { v4 as uuidv4 } from "uuid";
 import { useToDoDataContext } from "../context/ToDoDataContextHook";
-import "../styles/ToDoModal.css";
+import "../styles/Modal.css";
+import { DEFAULT_CATEGORIES } from "../util/constants";
 
 const determineToDo = (toDo: ToDo | null) => {
   if (toDo) {
@@ -15,12 +16,13 @@ const determineToDo = (toDo: ToDo | null) => {
       description: "",
       completed: false,
       dueDate: null,
+      category: DEFAULT_CATEGORIES[0],
     };
   }
 };
 
 export function ToDoModal({ toDo, onClose }: ToDoModalProps) {
-  const { addToDo, removeToDo, updateToDo } = useToDoDataContext();
+  const { addToDo, removeToDo, updateToDo, categories } = useToDoDataContext();
   const [currentToDo, setCurrentToDo] = useState<ToDo>(determineToDo(toDo));
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
@@ -113,6 +115,30 @@ export function ToDoModal({ toDo, onClose }: ToDoModalProps) {
                 })
               }
             />
+          </label>
+          <label>
+            Category
+            <select
+              value={currentToDo.category.name}
+              onChange={(e) => {
+                const selectedCategory = categories.find(
+                  (cat) => cat.name === e.target.value
+                );
+
+                if (selectedCategory) {
+                  setCurrentToDo({
+                    ...currentToDo,
+                    category: selectedCategory,
+                  });
+                }
+              }}
+            >
+              {categories.map((category) => (
+                <option key={category.name} value={category.name}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </label>
           <button onClick={onDelete}>Remove</button>
           <button type="submit">{toDo === null ? "Create" : "Edit"}</button>
