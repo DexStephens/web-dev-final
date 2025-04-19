@@ -14,3 +14,5 @@ export const DEFAULT_CATEGORIES: Category[] = [
     name: "School",
   },
 ];
+
+export const LOCAL_STORAGE_KEY = "to-do-data";

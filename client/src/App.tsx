@@ -45,4 +45,3 @@ function App() {
 export default App;
 
 //NEXT: add in notifications, more filter options
-//NEXT: work with local storage

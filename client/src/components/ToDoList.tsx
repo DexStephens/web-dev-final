@@ -41,6 +41,7 @@ export function ToDoList({ setSelectedToDo }: ToDoListProps) {
           {categories.map((category) => {
             return (
               <div
+                key={category.name}
                 className="category"
                 style={{
                   backgroundColor: filter.categories.includes(category)
