@@ -1,5 +1,3 @@
-import { UUIDTypes } from "uuid";
-
 export interface ToDoDataContextType {
   toDos: ToDo[];
   setToDos: (toDos: ToDo[]) => void;
@@ -9,9 +7,14 @@ export interface ToDoDataContextType {
 }
 
 export interface ToDo {
-  id: UUIDTypes;
+  id: string;
   title: string;
   description: string;
   completed: boolean;
   dueDate: Date | null;
+}
+
+export interface ToDoModalProps {
+  toDo: ToDo | null;
+  onClose: () => void;
 }
